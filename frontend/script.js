@@ -1,68 +1,67 @@
-const API_URL = "http://127.0.0.1:3000";
-
 const promptInput = document.getElementById("prompt");
-const charCount = document.getElementById("char-count");
 const generateButton = document.getElementById("generate-btn");
 const appStatus = document.getElementById("app-status");
+
 const imagePlaceholder = document.getElementById("image-placeholder");
+const generatedImage = document.getElementById("generated-image");
 const resultContent = document.getElementById("result-content");
 const resultMessage = document.getElementById("result-message");
 const requirementsList = document.getElementById("requirements-list");
 
-promptInput.addEventListener("input", () => {
-    charCount.textContent = `${promptInput.value.length} / 2000`;
-});
+console.log("TRUEFORM NEW SCRIPT LOADED");
 
-async function checkBackend() {
-    try {
-        const response = await fetch(`${API_URL}/health`);
-
-        if (!response.ok) {
-            throw new Error("Backend returned an error.");
-        }
-
-        appStatus.textContent = "Backend connected. Image generation provider is not connected yet.";
-    } catch {
-        appStatus.textContent = "Backend offline. Start the Rust server with cargo run.";
-    }
-}
 
 generateButton.addEventListener("click", async () => {
+
     const prompt = promptInput.value.trim();
 
     if (!prompt) {
-        appStatus.textContent = "Please describe the image you want first.";
-        promptInput.focus();
+        appStatus.textContent = "Please enter a prompt.";
         return;
     }
 
     generateButton.disabled = true;
-    generateButton.textContent = "Processing…";
-    appStatus.textContent = "Sending your requirements to the Rust backend…";
+    generateButton.textContent = "Generating...";
+    appStatus.textContent = "Generating your image...";
 
     try {
-        const response = await fetch(`${API_URL}/api/generate`, {
+
+        const response = await fetch("/api/generate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ prompt })
+            body: JSON.stringify({
+                prompt: prompt
+            })
         });
 
         const data = await response.json();
 
+        console.log("API DATA:", data);
+        console.log("IMAGE URL:", data.image_url);
+
         if (!response.ok) {
-            throw new Error(data.error || data || "The request failed.");
+            throw new Error(data.message || "Generation failed.");
         }
 
+        // THIS IS THE IMPORTANT LINE
+        generatedImage.setAttribute("src", data.image_url);
+
+        generatedImage.hidden = false;
         imagePlaceholder.hidden = true;
+
         resultContent.hidden = false;
-        resultMessage.textContent = data.note || data.message;
+
+        resultMessage.textContent =
+            data.message || "Image generated successfully.";
 
         requirementsList.replaceChildren();
 
         for (const item of data.requirements || []) {
+
             const li = document.createElement("li");
+
             li.textContent = item.requirement;
 
             const status = document.createElement("span");
@@ -73,15 +72,18 @@ generateButton.addEventListener("click", async () => {
             requirementsList.appendChild(li);
         }
 
-        appStatus.textContent =
-            "Request successful. This is a backend prototype, not a generated or verified image.";
+        appStatus.textContent = "Image generated successfully.";
+
     } catch (error) {
+
+        console.error("TRUEFORM ERROR:", error);
+
         appStatus.textContent =
-            `Could not process the request: ${error.message}. Check that the backend is running.`;
+            `Error: ${error.message}`;
+
     } finally {
+
         generateButton.disabled = false;
-        generateButton.textContent = "Prepare image →";
+        generateButton.textContent = "Generate image →";
     }
 });
-
-checkBackend();

@@ -63,15 +63,14 @@ async fn generate(
     }
 
     let requirements = prompt
-        .split([',', '.', ';', '\n'])
-        .map(str::trim)
-        .filter(|part| !part.is_empty())
-        .map(|part| RequirementResult {
-            requirement: part.to_string(),
-            status: "pending".to_string(),
-        })
-        .collect();
-
+    .split([',', '.', ';', '\n'])
+    .map(str::trim)
+    .filter(|part| !part.is_empty())
+    .map(|part| RequirementResult {
+        requirement: part.to_string(),
+        status: "generated".to_string(),
+    })
+    .collect();
     // REAL AI GENERATION
     let generated_image = image_service::generate_image(prompt)
         .await

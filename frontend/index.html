@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +10,23 @@
 <body>
     <header class="navbar">
         <a class="logo" href="#">trueform<span>.</span></a>
-        <span class="status"><span class="status-dot"></span> Development mode</span>
+        <span class="status">
+            <span class="status-dot"></span> Development mode
+        </span>
     </header>
 
     <main class="container">
+
         <section class="hero">
-            <p class="eyebrow">AI IMAGE GENERATION · CONSTRAINT-AWARE DESIGN</p>
-            <h1>Your vision,<br><span>faithfully rendered.</span></h1>
+            <p class="eyebrow">
+                AI IMAGE GENERATION · CONSTRAINT-AWARE DESIGN
+            </p>
+
+            <h1>
+                Your vision,<br>
+                <span>faithfully rendered.</span>
+            </h1>
+
             <p class="subtitle">
                 Describe what you imagine. Trueform is designed to help you
                 create images that follow your specific visual requirements.
@@ -23,8 +34,10 @@
         </section>
 
         <section class="workspace">
+
             <div class="input-panel">
                 <label for="prompt">DESCRIBE YOUR IMAGE</label>
+
                 <textarea
                     id="prompt"
                     maxlength="2000"
@@ -33,7 +46,10 @@
 
                 <div class="input-footer">
                     <span id="char-count">0 / 2000</span>
-                    <button id="generate-btn">Prepare image →</button>
+
+                    <button id="generate-btn">
+                        Generate image →
+                    </button>
                 </div>
 
                 <p class="hint">
@@ -41,54 +57,116 @@
                 </p>
             </div>
 
+
             <div class="result-panel">
+
                 <div class="result-heading">
                     <h2>Your result</h2>
-                    <span class="badge">PREVIEW</span>
+                    <span class="badge">AI GENERATED</span>
                 </div>
 
+
+                <!-- Placeholder shown before generation -->
                 <div id="image-placeholder" class="image-placeholder">
                     <div class="placeholder-icon">✳</div>
+
                     <h3>Your canvas awaits</h3>
-                    <p>Your generated image will appear here once an image provider is connected.</p>
+
+                    <p>
+                        Your generated image will appear here once Trueform
+                        finishes generating it.
+                    </p>
                 </div>
 
+
+                <!-- Generated image -->
+                <img
+                    id="generated-image"
+                    class="generated-image"
+                    alt="Trueform generated image"
+                    hidden
+                />
+
+
+                <!-- Generation information and requirements -->
                 <div id="result-content" hidden>
-                    <div id="result-message" class="result-message"></div>
+
+                    <div
+                        id="result-message"
+                        class="result-message"
+                    ></div>
+
                     <h3>Requirement breakdown</h3>
+
                     <ul id="requirements-list"></ul>
+
                 </div>
+
             </div>
+
         </section>
+
 
         <section class="how-it-works">
+
             <h2>Built for more faithful results.</h2>
+
             <div class="steps">
+
                 <article>
                     <span>01</span>
+
                     <h3>Describe</h3>
-                    <p>Specify the details your image must contain.</p>
+
+                    <p>
+                        Specify the details your image must contain.
+                    </p>
                 </article>
+
+
                 <article>
                     <span>02</span>
+
                     <h3>Evaluate</h3>
-                    <p>Check each requirement against the generated image.</p>
+
+                    <p>
+                        Check each requirement against the generated image.
+                    </p>
                 </article>
+
+
                 <article>
                     <span>03</span>
+
                     <h3>Refine</h3>
-                    <p>Target failed requirements and evaluate the result again.</p>
+
+                    <p>
+                        Target failed requirements and evaluate the result again.
+                    </p>
                 </article>
+
             </div>
+
         </section>
 
-        <p id="app-status" class="app-status" role="status">
+
+        <p
+            id="app-status"
+            class="app-status"
+            role="status"
+        >
             Connecting to the Trueform backend…
         </p>
+
     </main>
 
-    <footer>TRUEFORM © 2026 · Built to bring ideas closer to reality.</footer>
 
-    <script src="script.js"></script>
+    <footer>
+        TRUEFORM © 2026 · Built to bring ideas closer to reality.
+    </footer>
+
+
+    <script src="./script.js?v=9999"></script>
+
 </body>
 </html>
